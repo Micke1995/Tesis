@@ -2,7 +2,7 @@ clc
 clear all
 
 
-Senales = pqmodel();
+Senales = pqmodel(10,3840,60,10,1);
 
 %%%%Para Guardar una variable usamos%%
 

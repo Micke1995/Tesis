@@ -70,12 +70,12 @@ tipodesenal='SwellHarmonicFlickerOscillatory'
 fig = plt.figure()
 
 ax=fig.gca()
-k=155*10
+k=158*7
 
 
 font = {
     'weight': 'normal',
-    'size'  :  10,
+    'size'  :  20,
     'color': 'lightgray'
 }
 
@@ -83,7 +83,9 @@ font = {
 
 def actualizar (i):
     ax.clear()
-    if i*k < len(y) and (i-5) >= 0:    
+    if i*k < len(y) and (i-5) >= 0:
+        #ax.set_ylim(0,2)
+        ax.set_ylim(-2,2)    
         ax.plot(y[(i-5)*k:i*k])
         ax.text(0.95, 0.2, tipodesenal,
             horizontalalignment='right',

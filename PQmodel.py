@@ -418,6 +418,7 @@ class PQ:
         if self.t1t2 == None:
             t1t2 = uniform(self.Pmin,self.Pmax) # Random number between periodMin-periodMax indicating how many periods the disturbace last
             pointst1t2 = round((t1t2)*(self.fs/self.f))   # The period is converted into points
+            border = round((0)*(self.fs/self.f))
         else:     
             pointst1t2 = round((self.t1t2 )*(self.fs/self.f))   # The period is converted into points
             border = round((self.PeriodLimit)*(self.fs/self.f))
@@ -468,6 +469,7 @@ class PQ:
         if self.t1t2 == None:
             t1t2 = uniform(self.periodMinOT,self.periodMaxOT) #Random number between periodMinOT-periodMaxOT, indicating how many periods the disturbace last
             pointst1t2 = round((t1t2)*(self.fs/self.f))   # The period is converted into points
+            border = round((0)*(self.fs/self.f))
         else:     
             pointst1t2 = round((self.t1t2 )*(self.fs/self.f))   # The period is converted into points
             border = round((self.PeriodLimit)*(self.fs/self.f))
@@ -499,20 +501,22 @@ class PQ:
 
         if self.t1t2 == None:
             t1t2 = uniform(self.Pmin,self.Pmax) # Random number between periodMin-periodMax indicating how many periods the disturbace last
+            #print(self.Pmin)
             pointst1t2 = round((t1t2)*(self.fs/self.f))   # The period is converted into points
+            border = round((0)*(self.fs/self.f))
         else:     
             pointst1t2 = round((self.t1t2 )*(self.fs/self.f))   # The period is converted into points
             border = round((self.PeriodLimit)*(self.fs/self.f))
 
         if self.Inicio == None:
-            pointt1 = round((self.PointsPerSignal)*random()) # Random initial point of the disturbace selected randomly in the range 0-PointsPerSignal
-
+            pointt1 = round(0+(self.PointsPerSignal-0)*random()) # Random initial point of the disturbace selected randomly in the range 0-PointsPerSignal
             while (pointt1+pointst1t2)>self.PointsPerSignal-border:   # We check that the disturbace ends before the signal ends, otherwise a new starting point is generated
-                pointt1 = round((self.PointsPerSignal)*random()) #Initial point of the disturbace selected randomly in the range 0-PointsPerSignal
+                pointt1 = round(0+(self.PointsPerSignal-0)*random()) #Initial point of the disturbace selected randomly in the range 0-PointsPerSignal
         else:         
             pointt1=round((self.Inicio)*(self.fs/self.f))
             
         u1 = np.concatenate((np.zeros(pointt1), np.ones(self.PointsPerSignal-pointt1))) #Step funcion, translated pointt1 points to the right
+        #print(pointt1+pointst1t2,self.PointsPerSignal-(pointt1+pointst1t2))
         u2 = np.concatenate((np.zeros(pointt1+pointst1t2),np.ones(self.PointsPerSignal-(pointt1+pointst1t2)))) #Step funcion, translated pointt1+pointst1t2 points to the right
         u = u1-u2 # Difference function, 0 all except the interval (pointt1,pointt1+pointst1t2)
 
@@ -528,7 +532,7 @@ class PQ:
 
 
 
-#prueba=PQ(Cicles=17,PeriodoDisturbio=5,FinalDisturbio=2,InicioDisturbio=5)
+#prueba=PQ()
 
 #plt.plot(prueba.t,prueba.PQaleatorio(300)[1,28])
 #plt.show()

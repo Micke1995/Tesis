@@ -1,7 +1,25 @@
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from random import uniform,random,randint
 from numpy import pi,exp,sin
+from numpy.lib.stride_tricks import sliding_window_view as ws_split
+
+def build_data(data,cs=16):
+    Muestras,tSenal,LSenal=data.shape
+    db,dbl=[],[]
+    for j in range(Muestras):
+        for k in range (tSenal):
+            s = data[j,k]
+            sd= ws_split(s,window_shape=cs)
+            y=np.zeros(tSenal)
+            for iw in range(len(sd)):
+                #print(len(sd))
+                y[k]=1
+                db.append(sd[iw])
+                dbl.append(y)
+
+    return np.array(db),np.array(dbl)
+
 
 class PQ:
     def __init__(self,Magnitud=1,Frecuency=60,Cicles=10,FS=16000,Amin=0.1,Amax=0.9,Phmin=-pi,Phmax=pi,PeriodoDisturbio=None,FinalDisturbio=0,InicioDisturbio=None):
